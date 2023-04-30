@@ -1,4 +1,4 @@
-package com.haero77.urlshortener.global.util;
+package com.haero77.urlshortener.domain.shorturl.util;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
