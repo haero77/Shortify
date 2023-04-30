@@ -14,7 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 
 import com.haero77.urlshortener.domain.shorturl.type.BaseTime;
-import com.haero77.urlshortener.global.util.TimeUtil;
+import com.haero77.urlshortener.domain.shorturl.util.TimeUtil;
 
 @Entity
 public class ShortUrl extends BaseTime {
