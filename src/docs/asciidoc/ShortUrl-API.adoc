@@ -1,0 +1,6 @@
+== ShortUrl API
+
+=== ShortUrl 생성
+
+operation::short-url-create[snippets='http-request,request-fields,http-response']
+
