@@ -63,8 +63,15 @@ public class ShortUrl extends BaseTime {
 	}
 
 	public boolean isExpired() {
-		return TimeUtil.getCurrentSeoulTime()
-			.isAfter(this.expirationDate);
+		if (this.status == ShortUrlStatus.EXPIRED) {
+			return true;
+		}
+
+		boolean isExpired = TimeUtil.getCurrentSeoulTime().isAfter(this.expirationDate);
+		if (isExpired) {
+			this.status = ShortUrlStatus.EXPIRED;
+		}
+		return isExpired;
 	}
 
 	public void assignShortenedUrl(String shortenedUrl) {
