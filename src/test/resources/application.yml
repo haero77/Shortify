@@ -1,8 +1,5 @@
 spring:
   jpa:
-    database: mysql
-    hibernate:
-      ddl-auto: create
     properties:
       hibernate:
         format_sql: true
@@ -11,12 +8,6 @@ spring:
   h2:
     console:
       enabled: true
-
-  datasource:
-    url: jdbc:mysql://localhost:3306/short_url
-    username: root
-    password: 1234
-    driver-class-name: com.mysql.cj.jdbc.Driver
 
   output:
     ansi:
@@ -27,10 +18,13 @@ logging:
     org:
       hibernate:
         SQL: debug
-#      springframework:
+      springframework:
+        transaction: debug
+        orm:
+          jpa: debug
 #        web: info
 
 decorator:
   datasource:
     p6spy:
-      enable-logging: true
+      enable-logging: false
