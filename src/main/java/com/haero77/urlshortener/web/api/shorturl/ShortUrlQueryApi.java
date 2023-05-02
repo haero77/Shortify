@@ -30,7 +30,7 @@ public class ShortUrlQueryApi {
 	}
 
 	private ResponseEntity<HttpHeaders> redirect(String shortenedUrl) {
-		String originUrl = shortUrlReader.getOriginUrl(shortenedUrl);
+		String originUrl = shortUrlReader.getOriginUrlIfValid(shortenedUrl);
 
 		HttpHeaders headers = new HttpHeaders();
 		URI redirectLocation = UriComponentsBuilder.fromHttpUrl(originUrl)
