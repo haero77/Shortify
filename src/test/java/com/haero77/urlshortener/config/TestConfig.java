@@ -3,24 +3,34 @@ package com.haero77.urlshortener.config;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 
-import com.haero77.urlshortener.domain.shorturl.repository.ShortUrlRepository;
-import com.haero77.urlshortener.domain.shorturl.service.ShortUrlCreator;
-import com.haero77.urlshortener.domain.shorturl.service.ShortUrlReader;
+import com.haero77.urlshortener.domain.url.repository.UrlRepository;
+import com.haero77.urlshortener.domain.url.service.UrlCreator;
+import com.haero77.urlshortener.domain.url.service.UrlReader;
+import com.haero77.urlshortener.domain.url.service.UrlUpdater;
 
 @TestConfiguration
 public class TestConfig {
 
 	@Bean
-	public ShortUrlCreator shortUrlCreator(
-		ShortUrlRepository shortUrlRepository
+	public UrlCreator urlCreator(
+		UrlRepository urlRepository,
+		UrlReader urlReader,
+		UrlUpdater urlUpdater
 	) {
-		return new ShortUrlCreator(shortUrlRepository);
+		return new UrlCreator(urlRepository, urlReader, urlUpdater);
 	}
 
 	@Bean
-	public ShortUrlReader shortUrlReader(
-		ShortUrlRepository shortUrlRepository
+	public UrlReader urlReader(
+		UrlRepository urlRepository
 	) {
-		return new ShortUrlReader(shortUrlRepository);
+		return new UrlReader(urlRepository);
+	}
+
+	@Bean
+	public UrlUpdater urlUpdater(
+		UrlReader urlReader
+	) {
+		return new UrlUpdater(urlReader);
 	}
 }
