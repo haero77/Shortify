@@ -52,22 +52,25 @@ public class ShortUrl extends BaseTime {
 		this.status = status;
 	}
 
-	public static ShortUrl createWithoutShortenedUrl(String originUrl, Period expirationPeriod) {
-		LocalDateTime expireDate = calcExpireDate(expirationPeriod);
+	public static ShortUrl createWithoutShortenedUrl(
+		String originUrl,
+		Period expirationPeriod,
+		LocalDateTime currentDateTime
+	) {
+		LocalDateTime expireDate = calcExpireDateTime(currentDateTime, expirationPeriod);
 		return new ShortUrl(originUrl, expireDate, ShortUrlStatus.NOT_READY);
 	}
 
-	private static LocalDateTime calcExpireDate(Period expireDays) {
-		return TimeUtil.getCurrentSeoulTime()
-			.plus(expireDays);
+	private static LocalDateTime calcExpireDateTime(LocalDateTime currentDateTime, Period expireDays) {
+		return currentDateTime.plus(expireDays);
 	}
 
-	public boolean isExpired() {
+	public boolean isExpired(LocalDateTime currentDateTime) {
 		if (this.status == ShortUrlStatus.EXPIRED) {
 			return true;
 		}
 
-		boolean isExpired = TimeUtil.getCurrentSeoulTime().isAfter(this.expirationDate);
+		boolean isExpired = currentDateTime.isAfter(this.expirationDate);
 		if (isExpired) {
 			this.status = ShortUrlStatus.EXPIRED;
 		}
@@ -77,6 +80,10 @@ public class ShortUrl extends BaseTime {
 	public void assignShortenedUrl(String shortenedUrl) {
 		this.shortenedUrl = shortenedUrl;
 		this.status = ShortUrlStatus.ACTIVE;
+	}
+
+	public boolean hasValidStatus() {
+		return !isExpired(TimeUtil.getCurrentSeoulTime()) && this.status == ShortUrlStatus.ACTIVE;
 	}
 
 	public Long id() {

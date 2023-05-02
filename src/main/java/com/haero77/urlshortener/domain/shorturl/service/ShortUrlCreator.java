@@ -9,6 +9,7 @@ import com.haero77.urlshortener.domain.shorturl.dto.ShortUrlCreateRequest;
 import com.haero77.urlshortener.domain.shorturl.entity.ShortUrl;
 import com.haero77.urlshortener.domain.shorturl.repository.ShortUrlRepository;
 import com.haero77.urlshortener.domain.shorturl.util.Base62Encoder;
+import com.haero77.urlshortener.domain.shorturl.util.TimeUtil;
 
 @Service
 @Transactional
@@ -28,7 +29,11 @@ public class ShortUrlCreator {
 	}
 
 	private Long create(String originUrl, Period expirationPeriod) {
-		ShortUrl shortUrl = ShortUrl.createWithoutShortenedUrl(originUrl, expirationPeriod);
+		ShortUrl shortUrl = ShortUrl.createWithoutShortenedUrl(
+			originUrl,
+			expirationPeriod,
+			TimeUtil.getCurrentSeoulTime()
+		);
 		shortUrlRepository.save(shortUrl);
 		shortUrl.assignShortenedUrl(Base62Encoder.encode(shortUrl.id()));
 		return shortUrl.id();
