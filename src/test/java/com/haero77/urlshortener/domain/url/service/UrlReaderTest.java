@@ -15,7 +15,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.haero77.urlshortener.config.TestConfig;
 import com.haero77.urlshortener.domain.url.entity.Url;
-import com.haero77.urlshortener.domain.url.exception.ShortUrlInvalidStatusException;
+import com.haero77.urlshortener.domain.url.exception.UrlInvalidStatusException;
 import com.haero77.urlshortener.domain.url.repository.UrlRepository;
 import com.haero77.urlshortener.domain.url.util.Base62Encoder;
 
@@ -44,7 +44,7 @@ class UrlReaderTest {
 
 		// when & then
 		assertThatThrownBy(() -> {
-			urlReader.getOriginUrlIfValid(shortenedUrl);
-		}).isInstanceOf(ShortUrlInvalidStatusException.class);
+			urlReader.getUrlIfValid(shortenedUrl);
+		}).isInstanceOf(UrlInvalidStatusException.class);
 	}
 }
