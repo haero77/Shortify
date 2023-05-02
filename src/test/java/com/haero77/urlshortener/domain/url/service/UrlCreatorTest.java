@@ -9,7 +9,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.haero77.urlshortener.domain.url.dto.ShortUrlCreateRequest;
+import com.haero77.urlshortener.domain.url.dto.UrlCreateRequest;
+import com.haero77.urlshortener.domain.url.dto.UrlCreateResponse;
 import com.haero77.urlshortener.domain.url.entity.ShortUrlStatus;
 import com.haero77.urlshortener.domain.url.entity.Url;
 import com.haero77.urlshortener.domain.url.repository.UrlRepository;
@@ -35,13 +36,13 @@ class UrlCreatorTest {
 	@DisplayName("ShortUrl을 생성하고 나면 상태는 ACTIVE이다.")
 	void create() {
 		// given
-		ShortUrlCreateRequest createRequest =
-			new ShortUrlCreateRequest("https://github.com/haero77", false);
+		UrlCreateRequest urlCreateRequest =
+			new UrlCreateRequest("https://github.com/haero77", false);
 
-		Long savedId = urlCreator.create(createRequest);
+		UrlCreateResponse urlCreateResponse = urlCreator.create("https://github.com/", urlCreateRequest);
 
 		// when
-		Url findUrl = urlRepository.findById(savedId).get();
+		Url findUrl = urlRepository.findById(urlCreateResponse.id()).get();
 
 		// then
 		assertThat(findUrl.status()).isSameAs(ShortUrlStatus.ACTIVE);
