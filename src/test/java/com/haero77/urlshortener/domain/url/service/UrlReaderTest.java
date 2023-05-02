@@ -1,4 +1,4 @@
-package com.haero77.urlshortener.domain.shorturl.service;
+package com.haero77.urlshortener.domain.url.service;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -14,21 +14,21 @@ import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.haero77.urlshortener.config.TestConfig;
-import com.haero77.urlshortener.domain.shorturl.entity.ShortUrl;
-import com.haero77.urlshortener.domain.shorturl.exception.ShortUrlInvalidStatusException;
-import com.haero77.urlshortener.domain.shorturl.repository.ShortUrlRepository;
-import com.haero77.urlshortener.domain.shorturl.util.Base62Encoder;
+import com.haero77.urlshortener.domain.url.entity.Url;
+import com.haero77.urlshortener.domain.url.exception.ShortUrlInvalidStatusException;
+import com.haero77.urlshortener.domain.url.repository.UrlRepository;
+import com.haero77.urlshortener.domain.url.util.Base62Encoder;
 
 @ExtendWith(SpringExtension.class)
 @Import(TestConfig.class)
 @DataJpaTest
-class ShortUrlReaderTest {
+class UrlReaderTest {
 
 	@Autowired
-	private ShortUrlRepository shortUrlRepository;
+	private UrlRepository urlRepository;
 
 	@Autowired
-	private ShortUrlReader shortUrlReader;
+	private UrlReader urlReader;
 
 	@Test
 	@DisplayName("만료된 url에 대해 origin url 조회 시 예외가 발생한다.")
@@ -36,15 +36,15 @@ class ShortUrlReaderTest {
 		// given
 		String originUrl = "https://github.com/haero77";
 		LocalDateTime currentDateTime = LocalDateTime.now().minusDays(10);
-		ShortUrl savedShortUrl = shortUrlRepository.save(
-			ShortUrl.createWithoutShortenedUrl(originUrl, Period.ofDays(1), currentDateTime)
+		Url savedUrl = urlRepository.save(
+			Url.createWithoutShortenedUrl(originUrl, Period.ofDays(1), currentDateTime)
 		);
-		String shortenedUrl = Base62Encoder.encode(savedShortUrl.id());
-		savedShortUrl.assignShortenedUrl(shortenedUrl);
+		String shortenedUrl = Base62Encoder.encode(savedUrl.id());
+		savedUrl.assignShortenedUrl(shortenedUrl);
 
 		// when & then
 		assertThatThrownBy(() -> {
-			shortUrlReader.getOriginUrlIfValid(shortenedUrl);
+			urlReader.getOriginUrlIfValid(shortenedUrl);
 		}).isInstanceOf(ShortUrlInvalidStatusException.class);
 	}
 }

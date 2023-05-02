@@ -1,4 +1,4 @@
-package com.haero77.urlshortener.domain.shorturl.dto;
+package com.haero77.urlshortener.domain.url.dto;
 
 public record ShortUrlCreateRequest(
 	String url,
