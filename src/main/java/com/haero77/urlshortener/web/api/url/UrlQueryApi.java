@@ -1,4 +1,4 @@
-package com.haero77.urlshortener.web.api.shorturl;
+package com.haero77.urlshortener.web.api.url;
 
 import java.net.URI;
 
@@ -10,15 +10,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.haero77.urlshortener.domain.shorturl.service.ShortUrlReader;
+import com.haero77.urlshortener.domain.url.service.UrlReader;
 
 @RestController
-public class ShortUrlQueryApi {
+public class UrlQueryApi {
 
-	private final ShortUrlReader shortUrlReader;
+	private final UrlReader urlReader;
 
-	public ShortUrlQueryApi(ShortUrlReader shortUrlReader) {
-		this.shortUrlReader = shortUrlReader;
+	public UrlQueryApi(UrlReader urlReader) {
+		this.urlReader = urlReader;
 	}
 
 	@GetMapping("/{shortenedUrl}")
@@ -26,11 +26,14 @@ public class ShortUrlQueryApi {
 		@PathVariable String shortenedUrl
 	) {
 		// TODO: +가 있는 경우 통계 return
+		// if (lastCharacter(shortenedUrl).equals('+')) {
+		// 	return getStatistics(shortenedUrl);
+		// }
 		return redirect(shortenedUrl);
 	}
 
 	private ResponseEntity<HttpHeaders> redirect(String shortenedUrl) {
-		String originUrl = shortUrlReader.getOriginUrlIfValid(shortenedUrl);
+		String originUrl = urlReader.getOriginUrlIfValid(shortenedUrl);
 
 		HttpHeaders headers = new HttpHeaders();
 		URI redirectLocation = UriComponentsBuilder.fromHttpUrl(originUrl)

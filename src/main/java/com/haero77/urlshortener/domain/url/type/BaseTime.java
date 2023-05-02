@@ -1,4 +1,4 @@
-package com.haero77.urlshortener.domain.shorturl.type;
+package com.haero77.urlshortener.domain.url.type;
 
 import java.time.LocalDateTime;
 

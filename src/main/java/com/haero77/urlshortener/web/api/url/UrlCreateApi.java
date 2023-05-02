@@ -1,4 +1,4 @@
-package com.haero77.urlshortener.web.api.shorturl;
+package com.haero77.urlshortener.web.api.url;
 
 import java.net.URI;
 
@@ -8,23 +8,23 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.haero77.urlshortener.domain.shorturl.dto.ShortUrlCreateRequest;
-import com.haero77.urlshortener.domain.shorturl.service.ShortUrlCreator;
+import com.haero77.urlshortener.domain.url.dto.ShortUrlCreateRequest;
+import com.haero77.urlshortener.domain.url.service.UrlCreator;
 
 @RestController
-public class ShortUrlCreateApi {
+public class UrlCreateApi {
 
-	private final ShortUrlCreator shortUrlCreator;
+	private final UrlCreator urlCreator;
 
-	public ShortUrlCreateApi(ShortUrlCreator shortUrlCreator) {
-		this.shortUrlCreator = shortUrlCreator;
+	public UrlCreateApi(UrlCreator urlCreator) {
+		this.urlCreator = urlCreator;
 	}
 
 	@PostMapping("/api/urls")
 	public ResponseEntity<Void> create(
 		@RequestBody ShortUrlCreateRequest request
 	) {
-		Long shortUrlId = shortUrlCreator.create(request);
+		Long shortUrlId = urlCreator.create(request);
 
 		URI location = UriComponentsBuilder.fromPath("/api/urls/{shortUrlId}")
 			.buildAndExpand(shortUrlId)

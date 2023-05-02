@@ -1,5 +1,6 @@
-package com.haero77.urlshortener.domain.shorturl.entity;
+package com.haero77.urlshortener.domain.url.entity;
 
+import static javax.persistence.EnumType.*;
 import static javax.persistence.GenerationType.*;
 
 import java.time.LocalDateTime;
@@ -7,24 +8,23 @@ import java.time.Period;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 
-import com.haero77.urlshortener.domain.shorturl.type.BaseTime;
-import com.haero77.urlshortener.domain.shorturl.util.TimeUtil;
+import com.haero77.urlshortener.domain.url.type.BaseTime;
+import com.haero77.urlshortener.domain.url.util.TimeUtil;
 
 @Entity
-public class ShortUrl extends BaseTime {
+public class Url extends BaseTime {
 
 	public static final Period DEFAULT_EXPIRATION_PERIOD = Period.ofDays(7);
 	public static final Period MAX_EXPIRATION_PERIOD = Period.ofDays(30);
 
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
-	@Column(name = "short_url_id")
+	@Column(name = "url_id")
 	private Long id;
 
 	private String shortenedUrl;
@@ -35,30 +35,30 @@ public class ShortUrl extends BaseTime {
 
 	private LocalDateTime expirationDate;
 
-	@Enumerated(value = EnumType.STRING)
+	@Enumerated(value = STRING)
 	private ShortUrlStatus status;
 
-	protected ShortUrl() {
+	protected Url() {
 	}
 
-	private ShortUrl(String originUrl, LocalDateTime expirationDate, ShortUrlStatus status) {
+	private Url(String originUrl, LocalDateTime expirationDate, ShortUrlStatus status) {
 		this(null, originUrl, expirationDate, status);
 	}
 
-	private ShortUrl(String shortenedUrl, String originUrl, LocalDateTime expirationDate, ShortUrlStatus status) {
+	private Url(String shortenedUrl, String originUrl, LocalDateTime expirationDate, ShortUrlStatus status) {
 		this.shortenedUrl = shortenedUrl;
 		this.originUrl = originUrl;
 		this.expirationDate = expirationDate;
 		this.status = status;
 	}
 
-	public static ShortUrl createWithoutShortenedUrl(
+	public static Url createWithoutShortenedUrl(
 		String originUrl,
 		Period expirationPeriod,
 		LocalDateTime currentDateTime
 	) {
 		LocalDateTime expireDate = calcExpireDateTime(currentDateTime, expirationPeriod);
-		return new ShortUrl(originUrl, expireDate, ShortUrlStatus.NOT_READY);
+		return new Url(originUrl, expireDate, ShortUrlStatus.NOT_READY);
 	}
 
 	private static LocalDateTime calcExpireDateTime(LocalDateTime currentDateTime, Period expireDays) {

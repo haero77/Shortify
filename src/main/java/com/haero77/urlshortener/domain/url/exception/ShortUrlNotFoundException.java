@@ -1,4 +1,4 @@
-package com.haero77.urlshortener.domain.shorturl.exception;
+package com.haero77.urlshortener.domain.url.exception;
 
 import org.springframework.http.HttpStatus;
 

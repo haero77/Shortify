@@ -1,4 +1,4 @@
-package com.haero77.urlshortener.web.api.shorturl;
+package com.haero77.urlshortener.web.api.url;
 
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.*;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
@@ -17,13 +17,13 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.haero77.urlshortener.domain.shorturl.dto.ShortUrlCreateRequest;
-import com.haero77.urlshortener.domain.shorturl.repository.ShortUrlRepository;
+import com.haero77.urlshortener.domain.url.dto.ShortUrlCreateRequest;
+import com.haero77.urlshortener.domain.url.repository.UrlRepository;
 
 @AutoConfigureMockMvc
 @AutoConfigureRestDocs
 @SpringBootTest
-class ShortUrlCreateApiTest {
+class UrlCreateApiTest {
 
 	private final ObjectMapper objectMapper = new ObjectMapper();
 
@@ -31,7 +31,7 @@ class ShortUrlCreateApiTest {
 	private MockMvc mockMvc;
 
 	@Autowired
-	private ShortUrlRepository shortUrlRepository;
+	private UrlRepository urlRepository;
 
 	@Test
 	@DisplayName("단축 URL 생성")
