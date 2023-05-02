@@ -86,6 +86,14 @@ public class Url extends BaseTime {
 		return !isExpired(TimeUtil.getCurrentSeoulTime()) && this.status == ShortUrlStatus.ACTIVE;
 	}
 
+	public void updateExpirationDate(LocalDateTime currentSeoulTime, Period maxExpirationPeriod) {
+		this.expirationDate = calcExpireDateTime(currentSeoulTime, maxExpirationPeriod);
+	}
+
+	public void delete() {
+		this.status = ShortUrlStatus.DELETED;
+	}
+
 	public Long id() {
 		return id;
 	}
