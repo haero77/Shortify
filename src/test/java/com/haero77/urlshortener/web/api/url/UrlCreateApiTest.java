@@ -17,7 +17,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.haero77.urlshortener.domain.url.dto.ShortUrlCreateRequest;
+import com.haero77.urlshortener.domain.url.dto.UrlCreateRequest;
 import com.haero77.urlshortener.domain.url.repository.UrlRepository;
 
 @AutoConfigureMockMvc
@@ -39,12 +39,12 @@ class UrlCreateApiTest {
 		// given
 		String originUrl = "https://github.com/haero77";
 		boolean expirationOption = false;
-		ShortUrlCreateRequest shortUrlCreateRequest = new ShortUrlCreateRequest(originUrl, expirationOption);
+		UrlCreateRequest urlCreateRequest = new UrlCreateRequest(originUrl, expirationOption);
 
 		// when & then
 		ResultActions resultActions = mockMvc.perform(post("/api/urls")
 				.contentType(MediaType.APPLICATION_JSON)
-				.content(objectMapper.writeValueAsString(shortUrlCreateRequest)))
+				.content(objectMapper.writeValueAsString(urlCreateRequest)))
 			.andExpect(status().isCreated());
 
 		// REST Docs

@@ -1,11 +1,11 @@
 package com.haero77.urlshortener.domain.url.dto;
 
-public record ShortUrlCreateRequest(
+public record UrlCreateRequest(
 	String url,
 	boolean expiration
 ) {
 
-	public boolean expirationExists() {
+	public boolean hasExpirationOption() {
 		return this.expiration;
 	}
 }
