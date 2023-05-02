@@ -3,8 +3,12 @@ package com.haero77.urlshortener.domain.url.entity;
 import static javax.persistence.FetchType.*;
 import static javax.persistence.GenerationType.*;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -13,7 +17,7 @@ import javax.persistence.ManyToOne;
 import com.haero77.urlshortener.domain.url.type.BaseTime;
 
 @Entity
-public class UrlCallHistory extends BaseTime {
+public class UrlCall extends BaseTime {
 
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
@@ -23,14 +27,20 @@ public class UrlCallHistory extends BaseTime {
 	@JoinColumn(name = "url_id")
 	private Url url;
 
+	@Enumerated(EnumType.STRING)
 	@Column(nullable = false, updatable = false)
 	private Referer referer;
 
-	protected UrlCallHistory() {
+	@Column(nullable = false, updatable = false)
+	private LocalDateTime callTime;
+
+	protected UrlCall() {
 	}
 
-	public UrlCallHistory(Url url) {
+	public UrlCall(Url url, Referer referer, LocalDateTime callTime) {
 		this.url = url;
+		this.referer = referer;
+		this.callTime = callTime;
 	}
 
 	public Long id() {
@@ -43,5 +53,9 @@ public class UrlCallHistory extends BaseTime {
 
 	public Referer referer() {
 		return referer;
+	}
+
+	public LocalDateTime callTime() {
+		return callTime;
 	}
 }
