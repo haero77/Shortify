@@ -15,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import com.haero77.urlshortener.domain.url.type.BaseTime;
+import com.haero77.urlshortener.domain.url.util.TimeUtil;
 
 @Entity
 public class UrlCall extends BaseTime {
@@ -41,6 +42,10 @@ public class UrlCall extends BaseTime {
 		this.url = url;
 		this.referer = referer;
 		this.callTime = callTime;
+	}
+
+	public boolean isCallTimeWithin(LocalDateTime startDate, LocalDateTime endDate) {
+		return TimeUtil.isDateWithin(this.callTime, startDate, endDate);
 	}
 
 	public Long id() {
