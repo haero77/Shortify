@@ -2,5 +2,16 @@
 
 === ShortUrl 생성
 
-operation::short-url-create[snippets='http-request,request-fields,http-response']
+operation::short-url-create[snippets='http-request,request-fields,http-response,response-fields']
 
+=== ShortUrl 리다이렉트
+
+operation::short-url-redirect[snippets='http-request,path-parameters,http-response']
+
+=== ShortUrl 통계 조회
+
+operation::short-url-statistics[snippets='http-request,path-parameters,http-response,response-fields']
+
+=== ShortUrl 삭제
+
+operation::short-url-delete[snippets='http-request,path-parameters,http-response']
