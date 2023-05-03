@@ -1,4 +1,4 @@
-package com.haero77.urlshortener.domain.shorturl.entity;
+package com.haero77.urlshortener.domain.url.entity;
 
 public enum ShortUrlStatus {
 

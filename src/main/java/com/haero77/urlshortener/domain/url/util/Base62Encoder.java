@@ -1,4 +1,4 @@
-package com.haero77.urlshortener.domain.shorturl.util;
+package com.haero77.urlshortener.domain.url.util;
 
 public class Base62Encoder {
 
