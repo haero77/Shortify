@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class DocsApi {
 
-	@GetMapping("/docs/api")
+	@GetMapping("/api/docs")
 	public ResponseEntity<String> docs() {
 		URI docsPath = URI.create("/docs/index.html");
 
