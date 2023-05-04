@@ -27,29 +27,25 @@ HTTP/1.1 200 OK
 Content-Type: application/json
 
 {
-"shortenedUrl": "shortenedUrl",
-"originUrl": "https://github.com/haero77",
-"viewCount": {
-"totalViewCount": 3,
-"viewCountPerDate": [
-{
-"date": "2023-04-28",
-"viewCount": 2
-}, {
-"date": "2023-04-29",
-"viewCount": 1
-}
-],
-"viewCountPerReferer": [
-{
-"referer": "GOOGLE",
-"viewCount": 1
-}, {
-"referer": "DIRECT",
-"viewCount": 2
-}
-]
-}
+  "shortenedUrl" : "shortenedUrl",
+  "originUrl" : "https://github.com/haero77",
+  "viewCount" : {
+    "totalViewCount" : 3,
+    "viewCountPerDate" : [ {
+      "date" : "2023-04-28",
+      "viewCount" : 2
+    }, {
+      "date" : "2023-04-29",
+      "viewCount" : 1
+    } ],
+    "viewCountPerReferer" : [ {
+      "referer" : "GOOGLE",
+      "viewCount" : 1
+    }, {
+      "referer" : "DIRECT",
+      "viewCount" : 2
+    } ]
+  }
 }
 ```
 
