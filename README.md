@@ -86,4 +86,4 @@ Content-Type: application/json
 
 ### 회고록
 
-
+- [1차 회고](https://velog.io/@balparang/회고-단축-URL-서비스-프로젝트-1차-회고)
