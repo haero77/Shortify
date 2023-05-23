@@ -10,8 +10,10 @@ import com.haero77.urlshortener.domain.shorturl.entity.ShortUrl;
 import com.haero77.urlshortener.domain.shorturl.repository.ShortUrlRepository;
 import com.haero77.urlshortener.domain.shorturl.util.Base62Encoder;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
-@Transactional
 public class ShortUrlCreator {
 
 	private final ShortUrlRepository shortUrlRepository;
@@ -20,17 +22,18 @@ public class ShortUrlCreator {
 		this.shortUrlRepository = shortUrlRepository;
 	}
 
-	public Long create(ShortUrlCreateRequest request) {
+	public Long create1(ShortUrlCreateRequest request) {
 		if (request.expirationExists()) {
-			return create(request.url(), ShortUrl.DEFAULT_EXPIRATION_PERIOD);
+			return create2(request.url(), ShortUrl.DEFAULT_EXPIRATION_PERIOD);
 		}
-		return create(request.url(), ShortUrl.MAX_EXPIRATION_PERIOD);
+		return create2(request.url(), ShortUrl.MAX_EXPIRATION_PERIOD);
 	}
 
-	private Long create(String originUrl, Period expirationPeriod) {
+	@Transactional
+	public Long create2(String originUrl, Period expirationPeriod) {
 		ShortUrl shortUrl = ShortUrl.createWithoutShortenedUrl(originUrl, expirationPeriod);
 		shortUrlRepository.save(shortUrl);
-		shortUrl.assignShortenedUrl(Base62Encoder.encode(shortUrl.id()));
+		shortUrl.assignShortenedUrl(Base62Encoder.encode(shortUrl.id())); // 변경 감지로 update 문이 나갈 것으로 기대
 		return shortUrl.id();
 	}
 }

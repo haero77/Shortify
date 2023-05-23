@@ -24,7 +24,7 @@ public class ShortUrlCreateApi {
 	public ResponseEntity<Void> create(
 		@RequestBody ShortUrlCreateRequest request
 	) {
-		Long shortUrlId = shortUrlCreator.create(request);
+		Long shortUrlId = shortUrlCreator.create1(request);
 
 		URI location = UriComponentsBuilder.fromPath("/api/urls/{shortUrlId}")
 			.buildAndExpand(shortUrlId)

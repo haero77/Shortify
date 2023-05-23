@@ -50,7 +50,7 @@ class ShortUrlCreateApiTest {
 		// REST Docs
 		resultActions
 			.andDo(print())
-			.andDo(document("short-url-create",
+			.andDo(document("short-url-create2",
 				requestFields(
 					fieldWithPath("url").description("단축할 URL"),
 					fieldWithPath("expiration").description("만료 옵션 지정 여부")
