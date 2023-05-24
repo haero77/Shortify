@@ -84,6 +84,8 @@ Content-Type: application/json
 
 ### 트러블 슈팅
 
+- [클래스 분리를 통한 프록시 내부 호출 문제 해결하기](https://velog.io/@balparang/Transactional%EC%9D%B4-%EB%8F%99%EC%9E%91%ED%95%98%EC%A7%80-%EC%95%8A%EC%9D%84-%EB%95%8C%EB%8A%94-%ED%94%84%EB%A1%9D%EC%8B%9C-%EA%B0%9D%EC%B2%B4%EB%A5%BC-%ED%86%B5%ED%95%B4-%EB%A9%94%EC%84%9C%EB%93%9C%EB%A5%BC-%ED%98%B8%EC%B6%9C%ED%96%88%EB%8A%94%EC%A7%80-%ED%99%95%EC%9D%B8%ED%95%98%EC%9E%90-%ED%94%84%EB%A1%9D%EC%8B%9C-%EB%82%B4%EB%B6%80-%ED%98%B8%EC%B6%9C-%EB%AC%B8%EC%A0%9C)
+
 ### 회고록
 
 - [1차 회고](https://velog.io/@balparang/회고-단축-URL-서비스-프로젝트-1차-회고)
