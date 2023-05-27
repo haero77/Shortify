@@ -9,7 +9,7 @@ import java.util.Map;
 
 import com.haero77.urlshortener.domain.url.entity.Referer;
 import com.haero77.urlshortener.domain.url.entity.Url;
-import com.haero77.urlshortener.domain.url.entity.UrlCall;
+import com.haero77.urlshortener.domain.url.entity.UrlCallHistory;
 
 /*
 	shortenedUrl
@@ -27,8 +27,8 @@ public record UrlStatisticsResponse(
 	ViewCount viewCount
 ) {
 
-	public static UrlStatisticsResponse of(Url url, List<UrlCall> urlCalls) {
-		ViewCount viewCount = ViewCount.from(urlCalls);
+	public static UrlStatisticsResponse of(Url url, List<UrlCallHistory> urlCallHistories) {
+		ViewCount viewCount = ViewCount.from(urlCallHistories);
 		return new UrlStatisticsResponse(url.shortenedUrl(), url.originUrl(), viewCount);
 	}
 
@@ -38,10 +38,10 @@ public record UrlStatisticsResponse(
 		List<ViewCountPerReferer> viewCountPerReferer
 	) {
 
-		public static ViewCount from(List<UrlCall> urlCalls) {
-			int totalViewCount = urlCalls.size();
-			List<ViewCountPerDate> viewCountPerDate = ViewCountPerDate.from(urlCalls);
-			List<ViewCountPerReferer> viewCountPerReferer = ViewCountPerReferer.from(urlCalls);
+		public static ViewCount from(List<UrlCallHistory> urlCallHistories) {
+			int totalViewCount = urlCallHistories.size();
+			List<ViewCountPerDate> viewCountPerDate = ViewCountPerDate.from(urlCallHistories);
+			List<ViewCountPerReferer> viewCountPerReferer = ViewCountPerReferer.from(urlCallHistories);
 
 			return new ViewCount(totalViewCount, viewCountPerDate, viewCountPerReferer);
 		}
@@ -52,12 +52,12 @@ public record UrlStatisticsResponse(
 		int viewCount
 	) {
 
-		public static List<ViewCountPerDate> from(List<UrlCall> urlCalls) {
-			return sortByDateAsc(calcViewCountPerDate(urlCalls));
+		public static List<ViewCountPerDate> from(List<UrlCallHistory> urlCallHistories) {
+			return sortByDateAsc(calcViewCountPerDate(urlCallHistories));
 		}
 
-		private static Map<LocalDate, Long> calcViewCountPerDate(List<UrlCall> urlCalls) {
-			return urlCalls.stream()
+		private static Map<LocalDate, Long> calcViewCountPerDate(List<UrlCallHistory> urlCallHistories) {
+			return urlCallHistories.stream()
 				.collect(groupingBy(urlCall -> urlCall.callTime().toLocalDate(), counting()));
 		}
 
@@ -75,13 +75,13 @@ public record UrlStatisticsResponse(
 		int viewCount
 	) {
 
-		public static List<ViewCountPerReferer> from(List<UrlCall> urlCalls) {
-			return convertToList(calcViewCountPerReferer(urlCalls));
+		public static List<ViewCountPerReferer> from(List<UrlCallHistory> urlCallHistories) {
+			return convertToList(calcViewCountPerReferer(urlCallHistories));
 		}
 
-		private static Map<Referer, Long> calcViewCountPerReferer(List<UrlCall> urlCalls) {
-			return urlCalls.stream()
-				.collect(groupingBy(UrlCall::referer, counting()));
+		private static Map<Referer, Long> calcViewCountPerReferer(List<UrlCallHistory> urlCallHistories) {
+			return urlCallHistories.stream()
+				.collect(groupingBy(UrlCallHistory::referer, counting()));
 		}
 
 		private static List<ViewCountPerReferer> convertToList(Map<Referer, Long> calcViewCountPerReferer) {

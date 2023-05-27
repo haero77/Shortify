@@ -5,7 +5,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.haero77.urlshortener.domain.url.entity.Referer;
 import com.haero77.urlshortener.domain.url.entity.Url;
-import com.haero77.urlshortener.domain.url.entity.UrlCall;
+import com.haero77.urlshortener.domain.url.entity.UrlCallHistory;
 import com.haero77.urlshortener.domain.url.repository.UrlCallRepository;
 import com.haero77.urlshortener.domain.url.util.TimeUtil;
 
@@ -20,8 +20,8 @@ public class UrlCallCreator {
 	}
 
 	public Long create(Url url, Referer referer) {
-		UrlCall urlCall = new UrlCall(url, referer, TimeUtil.getCurrentSeoulTime());
-		urlCallRepository.save(urlCall);
-		return urlCall.id();
+		UrlCallHistory urlCallHistory = new UrlCallHistory(url, referer, TimeUtil.getCurrentSeoulTime());
+		urlCallRepository.save(urlCallHistory);
+		return urlCallHistory.id();
 	}
 }

@@ -5,9 +5,9 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.haero77.urlshortener.domain.url.entity.Url;
-import com.haero77.urlshortener.domain.url.entity.UrlCall;
+import com.haero77.urlshortener.domain.url.entity.UrlCallHistory;
 
-public interface UrlCallRepository extends JpaRepository<UrlCall, Long> {
+public interface UrlCallRepository extends JpaRepository<UrlCallHistory, Long> {
 
-	List<UrlCall> findUrlCallByUrl(Url url);
+	List<UrlCallHistory> findUrlCallByUrl(Url url);
 }

@@ -18,7 +18,7 @@ import com.haero77.urlshortener.domain.url.type.BaseTime;
 import com.haero77.urlshortener.domain.url.util.TimeUtil;
 
 @Entity
-public class UrlCall extends BaseTime {
+public class UrlCallHistory extends BaseTime {
 
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
@@ -35,10 +35,10 @@ public class UrlCall extends BaseTime {
 	@Column(nullable = false, updatable = false)
 	private LocalDateTime callTime;
 
-	protected UrlCall() {
+	protected UrlCallHistory() {
 	}
 
-	public UrlCall(Url url, Referer referer, LocalDateTime callTime) {
+	public UrlCallHistory(Url url, Referer referer, LocalDateTime callTime) {
 		this.url = url;
 		this.referer = referer;
 		this.callTime = callTime;

@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.haero77.urlshortener.domain.url.dto.UrlStatisticsResponse;
 import com.haero77.urlshortener.domain.url.entity.Url;
-import com.haero77.urlshortener.domain.url.entity.UrlCall;
+import com.haero77.urlshortener.domain.url.entity.UrlCallHistory;
 import com.haero77.urlshortener.domain.url.repository.UrlCallRepository;
 import com.haero77.urlshortener.domain.url.util.TimeUtil;
 
@@ -28,19 +28,21 @@ public class UrlStatisticsProvider {
 
 	public UrlStatisticsResponse getStatistics(String shortenedUrl) {
 		Url findUrl = urlReader.findByShortenedUrl(shortenedUrl);
-		List<UrlCall> urlCalls = urlCallRepository.findUrlCallByUrl(findUrl);
+		List<UrlCallHistory> urlCallHistories = urlCallRepository.findUrlCallByUrl(findUrl);
 
-		List<UrlCall> urlCallsWithinDays = filterWithinDaysFromCurrentDate(urlCalls, STATISTICS_QUERY_DAYS);
-		return UrlStatisticsResponse.of(findUrl, urlCallsWithinDays);
+		List<UrlCallHistory> urlCallsWithinDayHistories = filterWithinDaysFromCurrentDate(urlCallHistories,
+			STATISTICS_QUERY_DAYS);
+		return UrlStatisticsResponse.of(findUrl, urlCallsWithinDayHistories);
 	}
 
-	private List<UrlCall> filterWithinDaysFromCurrentDate(List<UrlCall> urlCalls, int days) {
+	private List<UrlCallHistory> filterWithinDaysFromCurrentDate(List<UrlCallHistory> urlCallHistories, int days) {
 		LocalDateTime currentDateTime = TimeUtil.getCurrentSeoulTime();
-		return filterByDuration(urlCalls, currentDateTime.minusDays(days), currentDateTime);
+		return filterByDuration(urlCallHistories, currentDateTime.minusDays(days), currentDateTime);
 	}
 
-	private List<UrlCall> filterByDuration(List<UrlCall> urlCalls, LocalDateTime startDate, LocalDateTime endDate) {
-		return urlCalls.stream()
+	private List<UrlCallHistory> filterByDuration(List<UrlCallHistory> urlCallHistories, LocalDateTime startDate,
+		LocalDateTime endDate) {
+		return urlCallHistories.stream()
 			.filter(urlCall -> urlCall.isCallTimeWithin(startDate, endDate))
 			.toList();
 	}

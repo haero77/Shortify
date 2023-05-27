@@ -22,7 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.haero77.urlshortener.domain.url.entity.Referer;
 import com.haero77.urlshortener.domain.url.entity.Url;
-import com.haero77.urlshortener.domain.url.entity.UrlCall;
+import com.haero77.urlshortener.domain.url.entity.UrlCallHistory;
 import com.haero77.urlshortener.domain.url.repository.UrlCallRepository;
 import com.haero77.urlshortener.domain.url.repository.UrlRepository;
 import com.haero77.urlshortener.domain.url.util.TimeUtil;
@@ -55,15 +55,15 @@ class UrlQueryApiTest {
 
 		urlRepository.save(url);
 
-		List<UrlCall> urlCalls = List.of(
-			new UrlCall(url, Referer.DIRECT, currentDate.minusDays(6)),
-			new UrlCall(url, Referer.GOOGLE, currentDate.minusDays(6)),
-			new UrlCall(url, Referer.DIRECT, currentDate.minusDays(5)),
-			new UrlCall(url, Referer.DIRECT, currentDate.minusDays(4)),
-			new UrlCall(url, Referer.GOOGLE, currentDate.minusDays(3))
+		List<UrlCallHistory> urlCallHistories = List.of(
+			new UrlCallHistory(url, Referer.DIRECT, currentDate.minusDays(6)),
+			new UrlCallHistory(url, Referer.GOOGLE, currentDate.minusDays(6)),
+			new UrlCallHistory(url, Referer.DIRECT, currentDate.minusDays(5)),
+			new UrlCallHistory(url, Referer.DIRECT, currentDate.minusDays(4)),
+			new UrlCallHistory(url, Referer.GOOGLE, currentDate.minusDays(3))
 		);
 
-		urlCallRepository.saveAll(urlCalls);
+		urlCallRepository.saveAll(urlCallHistories);
 
 		// when & then
 		ResultActions resultActions = mockMvc.perform(
