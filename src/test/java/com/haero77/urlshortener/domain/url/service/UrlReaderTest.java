@@ -37,7 +37,7 @@ class UrlReaderTest {
 		String originUrl = "https://github.com/haero77";
 		LocalDateTime currentDateTime = LocalDateTime.now().minusDays(10);
 		Url savedUrl = urlRepository.save(
-			Url.createWithoutShortenedUrl(originUrl, Period.ofDays(1), currentDateTime)
+			Url.defaultOf(originUrl, Period.ofDays(1), currentDateTime)
 		);
 		String shortenedUrl = Base62Encoder.encode(savedUrl.id());
 		savedUrl.assignShortenedUrl(shortenedUrl);

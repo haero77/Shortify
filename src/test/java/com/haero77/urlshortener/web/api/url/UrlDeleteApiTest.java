@@ -40,7 +40,7 @@ class UrlDeleteApiTest {
 	void url_delete() throws Exception {
 
 		LocalDateTime currentDate = TimeUtil.getCurrentSeoulTime();
-		Url url = Url.createWithoutShortenedUrl(
+		Url url = Url.defaultOf(
 			"https://github.com/haero77", Url.DEFAULT_EXPIRATION_PERIOD, currentDate.minusDays(7));
 		String shortenedUrl = "shortenedUrl";
 		url.assignShortenedUrl(shortenedUrl);

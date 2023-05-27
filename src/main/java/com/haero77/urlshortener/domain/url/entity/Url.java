@@ -36,29 +36,29 @@ public class Url extends BaseTime {
 	private LocalDateTime expirationDate;
 
 	@Enumerated(value = STRING)
-	private ShortUrlStatus status;
+	private UrlType type;
 
 	protected Url() {
 	}
 
-	private Url(String originUrl, LocalDateTime expirationDate, ShortUrlStatus status) {
-		this(null, originUrl, expirationDate, status);
+	private Url(String originUrl, LocalDateTime expirationDate, UrlType type) {
+		this(null, originUrl, expirationDate, type);
 	}
 
-	private Url(String shortenedUrl, String originUrl, LocalDateTime expirationDate, ShortUrlStatus status) {
+	private Url(String shortenedUrl, String originUrl, LocalDateTime expirationDate, UrlType type) {
 		this.shortenedUrl = shortenedUrl;
 		this.originUrl = originUrl;
 		this.expirationDate = expirationDate;
-		this.status = status;
+		this.type = type;
 	}
 
-	public static Url createWithoutShortenedUrl(
+	public static Url defaultOf(
 		String originUrl,
 		Period expirationPeriod,
 		LocalDateTime currentDateTime
 	) {
 		LocalDateTime expireDate = calcExpireDateTime(currentDateTime, expirationPeriod);
-		return new Url(originUrl, expireDate, ShortUrlStatus.NOT_READY);
+		return new Url(originUrl, expireDate, UrlType.NOT_READY);
 	}
 
 	private static LocalDateTime calcExpireDateTime(LocalDateTime currentDateTime, Period expireDays) {
@@ -66,24 +66,24 @@ public class Url extends BaseTime {
 	}
 
 	public boolean isExpired(LocalDateTime currentDateTime) {
-		if (this.status == ShortUrlStatus.EXPIRED) {
+		if (this.type == UrlType.EXPIRED) {
 			return true;
 		}
 
 		boolean isExpired = currentDateTime.isAfter(this.expirationDate);
 		if (isExpired) {
-			this.status = ShortUrlStatus.EXPIRED;
+			this.type = UrlType.EXPIRED;
 		}
 		return isExpired;
 	}
 
 	public void assignShortenedUrl(String shortenedUrl) {
 		this.shortenedUrl = shortenedUrl;
-		this.status = ShortUrlStatus.ACTIVE;
+		this.type = UrlType.ACTIVE;
 	}
 
 	public boolean hasValidStatus() {
-		return !isExpired(TimeUtil.getCurrentSeoulTime()) && this.status == ShortUrlStatus.ACTIVE;
+		return !isExpired(TimeUtil.getCurrentSeoulTime()) && this.type == UrlType.ACTIVE;
 	}
 
 	public void updateExpirationDate(LocalDateTime currentSeoulTime, Period maxExpirationPeriod) {
@@ -91,7 +91,7 @@ public class Url extends BaseTime {
 	}
 
 	public void delete() {
-		this.status = ShortUrlStatus.DELETED;
+		this.type = UrlType.DELETED;
 	}
 
 	public Long id() {
@@ -110,7 +110,7 @@ public class Url extends BaseTime {
 		return expirationDate;
 	}
 
-	public ShortUrlStatus status() {
-		return status;
+	public UrlType status() {
+		return type;
 	}
 }

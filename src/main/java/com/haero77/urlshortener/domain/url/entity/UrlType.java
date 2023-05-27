@@ -1,6 +1,6 @@
 package com.haero77.urlshortener.domain.url.entity;
 
-public enum ShortUrlStatus {
+public enum UrlType {
 
 	NOT_READY,
 	ACTIVE,

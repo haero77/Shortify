@@ -53,7 +53,7 @@ public class UrlCreator {
 	}
 
 	private Url saveAsEncoded(String originUrl, Period expirationPeriod) {
-		Url url = Url.createWithoutShortenedUrl(
+		Url url = Url.defaultOf(
 			originUrl,
 			expirationPeriod,
 			TimeUtil.getCurrentSeoulTime()

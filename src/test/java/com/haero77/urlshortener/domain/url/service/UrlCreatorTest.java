@@ -11,8 +11,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.haero77.urlshortener.domain.url.dto.UrlCreateRequest;
 import com.haero77.urlshortener.domain.url.dto.UrlCreateResponse;
-import com.haero77.urlshortener.domain.url.entity.ShortUrlStatus;
 import com.haero77.urlshortener.domain.url.entity.Url;
+import com.haero77.urlshortener.domain.url.entity.UrlType;
 import com.haero77.urlshortener.domain.url.repository.UrlRepository;
 
 import lombok.extern.slf4j.Slf4j;
@@ -45,6 +45,6 @@ class UrlCreatorTest {
 		Url findUrl = urlRepository.findById(urlCreateResponse.id()).get();
 
 		// then
-		assertThat(findUrl.status()).isSameAs(ShortUrlStatus.ACTIVE);
+		assertThat(findUrl.status()).isSameAs(UrlType.ACTIVE);
 	}
 }

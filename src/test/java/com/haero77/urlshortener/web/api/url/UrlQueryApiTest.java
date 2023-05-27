@@ -48,7 +48,7 @@ class UrlQueryApiTest {
 	void url_statistics() throws Exception {
 
 		LocalDateTime currentDate = TimeUtil.getCurrentSeoulTime();
-		Url url = Url.createWithoutShortenedUrl(
+		Url url = Url.defaultOf(
 			"https://github.com/haero77", Url.DEFAULT_EXPIRATION_PERIOD, currentDate.minusDays(7));
 		String shortenedUrl = "shortenedUrl";
 		url.assignShortenedUrl(shortenedUrl);
@@ -95,7 +95,7 @@ class UrlQueryApiTest {
 	void url_redirect() throws Exception {
 
 		LocalDateTime currentDate = TimeUtil.getCurrentSeoulTime();
-		Url url = Url.createWithoutShortenedUrl(
+		Url url = Url.defaultOf(
 			"https://github.com/haero77", Url.DEFAULT_EXPIRATION_PERIOD, currentDate);
 		String shortenedUrl = "shortenedUrl";
 		url.assignShortenedUrl(shortenedUrl);
